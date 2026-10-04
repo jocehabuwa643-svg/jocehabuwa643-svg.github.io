@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; script-src &#39;self&#39; &#39;sha256-0akl4rMRhiOuE4nDzyD7MXqkncmSRdhDP8dayemFdLg=&#39;; style-src &#39;self&#39; &#39;unsafe-inline&#39;; img-src &#39;self&#39; data: blob: https://a.tile-cyclosm.openstreetmap.fr https://b.tile-cyclosm.openstreetmap.fr https://c.tile-cyclosm.openstreetmap.fr https://tile.openstreetmap.org https://xymlvxnsihiupnueynwm.supabase.co; font-src &#39;self&#39;; connect-src &#39;self&#39; https://a.tile-cyclosm.openstreetmap.fr https://b.tile-cyclosm.openstreetmap.fr https://c.tile-cyclosm.openstreetmap.fr https://tile.openstreetmap.org https://api.bigdatacloud.net https://valhalla1.openstreetmap.de https://routing.openstreetmap.de https://photon.komoot.io https://nominatim.openstreetmap.org https://overpass-api.de https://maps.mail.ru https://xymlvxnsihiupnueynwm.supabase.co wss://xymlvxnsihiupnueynwm.supabase.co; worker-src &#39;self&#39; blob:; child-src &#39;self&#39; blob:; manifest-src &#39;self&#39;; media-src &#39;self&#39; blob: https://xymlvxnsihiupnueynwm.supabase.co; object-src &#39;none&#39;; base-uri &#39;self&#39;; form-action &#39;self&#39;; upgrade-insecure-requests;">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>ВелоСиб — велосипедисты Новосибирска</title>
+    <meta name="description" content="Живая карта, чат и умный навигатор для велосипедистов." />
+    <meta name="theme-color" content="#F5EEE3" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="application-name" content="ВелоСиб" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="ВелоСиб" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <link rel="preload" href="/fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Тема до первой отрисовки: без вспышки светлого экрана у тех, кто выбрал тёмную. -->
+    <script>
+      (function () {
+        var root = document.documentElement
+        var preference = 'system'
+        try {
+          var saved = JSON.parse(localStorage.getItem('velosib-settings') || 'null')
+          if (saved && saved.state && /^(system|light|dark)$/.test(saved.state.theme)) preference = saved.state.theme
+        } catch (e) {}
+        var dark =
+          preference === 'dark' ||
+          (preference === 'system' && !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        root.setAttribute('data-theme', dark ? 'dark' : 'light')
+        root.style.colorScheme = dark ? 'dark' : 'light'
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', dark ? '#0A1426' : '#F5EEE3')
+        try {
+          if (sessionStorage.getItem('velosib-splash-seen')) root.classList.add('splash-quick')
+        } catch (e) {}
+      })()
+    </script>
+
+    <style>@font-face{font-family:Onest Variable;font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/onest-cyrillic.woff2)format("woff2-variations"),url(/fonts/onest-cyrillic.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}@font-face{font-family:Onest Variable;font-style:normal;font-display:swap;font-weight:100 900;src:url(/fonts/onest-latin.woff2)format("woff2-variations"),url(/fonts/onest-latin.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Unbounded Variable;font-style:normal;font-display:swap;font-weight:200 900;src:url(/fonts/unbounded-cyrillic.woff2)format("woff2-variations"),url(/fonts/unbounded-cyrillic.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}@font-face{font-family:Unbounded Variable;font-style:normal;font-display:swap;font-weight:200 900;src:url(/fonts/unbounded-latin.woff2)format("woff2-variations"),url(/fonts/unbounded-latin.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}html,body{background:#f5eee3;margin:0}html[data-theme=dark],html[data-theme=dark] body{background:#0a1426}#splash{z-index:9999;color:#13284a;background:#f5eee3;place-items:center;transition:opacity .24s cubic-bezier(.23,1,.32,1),visibility 0s linear .24s;display:grid;position:fixed;inset:0}html[data-theme=dark] #splash{color:#f4ecdf;background:#0a1426}#splash.is-leaving{opacity:0;visibility:hidden;pointer-events:none}.splash-inner{flex-direction:column;align-items:center;display:flex;transform:translateY(-3vh)}.splash-mark{width:112px;height:112px;display:block}html[data-theme=dark] .splash-tile{stroke:#f4ecdf24;stroke-width:6px}.splash-wheel,.splash-start,.splash-end{transform-box:view-box}.splash-wheel{transform-origin:256px 256px}.splash-start{transform-origin:190px 322px}.splash-end{transform-origin:322px 190px}.splash-word{letter-spacing:-.02em;margin:24px 0 0;font-family:Unbounded Variable,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:30px;font-weight:600;line-height:1.1}.splash-tag{color:#5a6577;margin:10px 0 0;font-family:Onest Variable,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.4}html[data-theme=dark] .splash-tag,html[data-theme=dark] .splash-slow{color:#a3afc2}.splash-slow{left:24px;right:24px;bottom:calc(32px + env(safe-area-inset-bottom));text-align:center;color:#5a6577;opacity:0;margin:0;font:14px/1.4 Onest Variable,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;animation:.4s cubic-bezier(.23,1,.32,1) 8s forwards splash-fade;position:absolute}@media (prefers-reduced-motion:no-preference){html:not(.splash-quick) .splash-mark{animation:.52s cubic-bezier(.23,1,.32,1) both splash-tile-in}html:not(.splash-quick) .splash-wheel{animation:.76s cubic-bezier(.23,1,.32,1) both splash-roll-in}html:not(.splash-quick) .splash-route{stroke-dasharray:1;stroke-dashoffset:1px;opacity:0;animation:.6s cubic-bezier(.77,0,.175,1) .18s forwards splash-draw}html:not(.splash-quick) .splash-start{animation:.22s cubic-bezier(.23,1,.32,1) .16s both splash-pop}html:not(.splash-quick) .splash-end{animation:.24s cubic-bezier(.23,1,.32,1) .7s both splash-pop}html:not(.splash-quick) .splash-word{animation:.42s cubic-bezier(.23,1,.32,1) .24s both splash-rise}html:not(.splash-quick) .splash-tag{animation:.42s cubic-bezier(.23,1,.32,1) .32s both splash-rise}}@media (prefers-reduced-motion:reduce){html:not(.splash-quick) .splash-inner{animation:.2s both splash-fade}}@keyframes splash-tile-in{0%{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}@keyframes splash-roll-in{0%{transform:rotate(-90deg)}to{transform:rotate(0)}}@keyframes splash-draw{0%{opacity:1;stroke-dashoffset:1px}to{opacity:1;stroke-dashoffset:0}}@keyframes splash-pop{0%{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}@keyframes splash-rise{0%{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes splash-fade{0%{opacity:0}to{opacity:1}}.noscript{z-index:10000;color:#f5eee3;text-align:center;background:#13284a;border-radius:16px;margin:0;padding:14px 18px;font:15px/1.4 system-ui,sans-serif;position:fixed;inset:auto 16px 24px}</style>
+    <script type="module" crossorigin src="/assets/index-DbMexxOW.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/brand-C18Gyq5g.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-B9Y5h8tO.css">
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <div id="splash" role="status" aria-label="ВелоСиб загружается">
+      <div class="splash-inner">
+        <svg class="splash-mark" viewBox="0 0 512 512" aria-hidden="true">
+          <defs>
+            <linearGradient id="splash-bg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#26508F" />
+              <stop offset="1" stop-color="#1A376B" />
+            </linearGradient>
+          </defs>
+          <rect class="splash-tile" width="512" height="512" rx="116" fill="url(#splash-bg)" />
+          <g class="splash-wheel">
+            <circle cx="256" cy="256" r="150" fill="none" stroke="#F5EEE3" stroke-width="40" />
+            <path
+              class="splash-route"
+              pathLength="1"
+              d="M190 322C190 278 256 292 256 256S322 234 322 190"
+              fill="none"
+              stroke="#E0A35C"
+              stroke-width="30"
+              stroke-linecap="round"
+            />
+            <circle class="splash-start" cx="190" cy="322" r="22" fill="#E0A35C" />
+            <circle class="splash-end" cx="322" cy="190" r="22" fill="#F5EEE3" />
+          </g>
+        </svg>
+        <p class="splash-word">ВелоСиб</p>
+        <p class="splash-tag">Крутим педали вместе</p>
+      </div>
+      <p class="splash-slow">Загрузка идёт дольше обычного. Проверьте интернет — мы подождём.</p>
+    </div>
+    <div id="root"></div>
+    <noscript><p class="noscript">Для работы ВелоСиба нужен включённый JavaScript.</p></noscript>
+  </body>
+</html>
